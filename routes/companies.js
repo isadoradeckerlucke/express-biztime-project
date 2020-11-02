@@ -1,5 +1,6 @@
 const express = require('express');
 const ExpressError = require('../expressError');
+const slugify = require('slugify')
 const db = require('../db');
 
 let router = new express.Router();
@@ -20,7 +21,7 @@ router.get('/', async function(req, res, next){
 // GET /companies/[code]
 // Return obj of company: {company: {code, name, description, invoices: [id, ...]}}
 // If the company given cannot be found, this should return a 404 status response.
-// If the company given cannot be found, this should return a 404 status response.
+// add in industries for the company
 router.get('/:code', async function(req, res, next){
     try {
         let code = req.params.code;
@@ -55,6 +56,7 @@ router.get('/:code', async function(req, res, next){
 router.post('/', async function(req, res, next){
     try {
         let {name, description} = req.body;
+        let code = slugify(name, {lower: true})
 
         const result = await db.query(
             `INSERT INTO companies (code, name, description) VALUES ($1, $2, $3) RETURNING code, name, description`, [code, name, description]
