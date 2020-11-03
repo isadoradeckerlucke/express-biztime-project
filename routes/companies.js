@@ -9,10 +9,15 @@ let router = new express.Router();
 // Returns list of companies, like {companies: [{code, name}, ...]}
 router.get('/', async function(req, res, next){
     try {
-        const result = await db.query(
+        const compResult = await db.query(
             `SELECT code, name FROM companies ORDER BY name`
         )
-        return res.json({'companies': result.rows})
+
+        // const industryResult = await db.query(
+        //     `SELECT industry_code FROM companies_industries WHERE company_code = $1`
+        // )
+        
+        return res.json({'companies': compResult.rows})
     } catch(err){
         return next(err)
     }

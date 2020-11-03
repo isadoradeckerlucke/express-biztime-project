@@ -3,7 +3,7 @@
 const {Client} = require('pg');
 
 const client = new Client({
-    connectionString: 'posgresql://biztime'
+    connectionString: 'postgresql:///biztime'
 });
 
 client.connect();
