@@ -12,9 +12,10 @@ router.get('/', async function(req, res, next){
         const compResult = await db.query(
             `SELECT code, name FROM companies ORDER BY name`
         )
+        
 
         // const industryResult = await db.query(
-        //     `SELECT industry_code FROM companies_industries WHERE company_code = $1`
+        //     `SELECT industry_code FROM companies_industries WHERE company_code = compResult.rows[0].code`
         // )
         
         return res.json({'companies': compResult.rows})
